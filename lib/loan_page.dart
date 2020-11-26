@@ -53,7 +53,21 @@ class _LoanPageState extends State<LoanPage>{
         ),
         RaisedButton(
           child: Text("Submit Loan Request"),
-          onPressed: (){},
+          onPressed: () async {
+            final uid =
+            await Provider
+                .of(context)
+                .auth
+                .getCurrentUID();
+            await Provider
+                .of(context)
+                .db
+                .collection('userData')
+                .document(uid)
+                .collection('Loan')
+                .add({"amount": sliderValue, "status": "Pending",});
+
+          },
         ),
 
       ],

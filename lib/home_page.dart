@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hijrah/auth.dart';
 import 'package:hijrah/loan_page.dart';
+import 'package:hijrah/status_page.dart';
 import 'auth.dart';
 import 'profile_page.dart';
+import 'package:hijrah/widgets/provider_widget.dart';
 import 'models/User.dart';
 
 class HomePage extends StatelessWidget {
@@ -80,7 +82,20 @@ class HomePage extends StatelessWidget {
         height: 50.0,
         buttonColor: Colors.white60,
         child: RaisedButton(
-          onPressed: () {},
+          onPressed: () async {
+            final uid =
+            await Provider
+                .of(context)
+                .auth
+                .getCurrentUID();
+            Navigator.of(context)
+                .push(
+                MaterialPageRoute(
+                    builder: (context) => StatusPage(text: uid)
+                )
+            );
+
+          },
           child: Text("Check Status", style: TextStyle(fontSize: 20.0)),
         ),
       ),
