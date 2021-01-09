@@ -66,8 +66,9 @@ class _ProfilePageState extends State<ProfilePage> {
               alignment: Alignment(0.0, 0.0),
               child: Column(
                 children: <Widget>[
-                  SizedBox(
-                    height: 200.0,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Icon(Icons.account_circle, size: 100),
                   ),
 
                   Padding(

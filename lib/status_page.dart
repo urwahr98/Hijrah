@@ -37,9 +37,15 @@ class _StatusPageState extends State<StatusPage>{
           itemBuilder: (context, index) {
             DocumentSnapshot user = snapshot.data.documents[index];
 
-            return ListTile(
-              title: Text(user.data['amount'].toString()),
-              subtitle: Text(user.data['status'].toString()),
+            return Card(
+              child: ListTile(
+                title: Text("RM "+user.data['amount'].toString()),
+                subtitle: Text("Status: "+user.data['status'].toString()
+                              +"\n"+user.data['dateRequest'].toString()),
+                isThreeLine: true,
+                trailing: Icon(Icons.more_vert),
+                onTap: (){},
+            ),
             );
           },
             );
