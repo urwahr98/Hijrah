@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 // import 'package:hijrah/auth.dart';
 // import 'auth.dart';
 import 'models/User.dart';
 import 'package:hijrah/widgets/provider_widget.dart';
+
 
 
 class ProfilePage extends StatefulWidget {
@@ -79,12 +81,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
 
-                  FlatButton(
-                    child: Text("Change Name", style: TextStyle(color: Colors.blue),),
+                  FlatButton.icon(
+                    label: Text("Change Name", style: TextStyle(color: Colors.blue),),
                     onPressed: (){
                       _userEditBottomSheetName(context);
                     },
+                    icon: Icon(Icons.mode_edit, size: 17, color: Colors.blue,),
                   ),
+
 
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -93,11 +97,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
-                  FlatButton(
-                    child: Text("Input Ic Number", style: TextStyle(color: Colors.blue),),
+
+                  FlatButton.icon(
+                    label: Text("Input Ic Number", style: TextStyle(color: Colors.blue),),
                     onPressed: (){
                       _userEditBottomSheetICNum(context);
                     },
+                    icon: Icon(Icons.mode_edit, size: 17, color: Colors.blue,),
                   ),
 
                   Padding(
@@ -108,11 +114,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
 
-                  FlatButton(
-                    child: Text("Change Phone Number", style: TextStyle(color: Colors.blue),),
+                  FlatButton.icon(
+                    label: Text("Change Phone Number", style: TextStyle(color: Colors.blue),),
                     onPressed: (){
                       _userEditBottomSheetPhoneNum(context);
                     },
+                    icon: Icon(Icons.mode_edit, size: 17, color: Colors.blue,),
                   ),
 
                   Padding(
@@ -123,24 +130,35 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
 
-                  FlatButton(
-                    child: Text("Change Address", style: TextStyle(color: Colors.blue),),
+                  FlatButton.icon(
+                    label: Text("Change Address", style: TextStyle(color: Colors.blue),),
                     onPressed: (){
                       _userEditBottomSheetAddress(context);
                     },
+                    icon: Icon(Icons.mode_edit, size: 17, color: Colors.blue,),
                   ),
 
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Birthday: ",
+                      "Birthday: 19/10/1998",
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
 
-                  FlatButton(
-                    child: Text("Change Birthday", style: TextStyle(color: Colors.blue),),
-                    onPressed: (){},
+                  FlatButton.icon(
+                    label: Text("Change Birthday", style: TextStyle(color: Colors.blue),),
+                    onPressed: (){
+                      DatePicker.showDatePicker(context,
+                          showTitleActions: true,
+                          minTime: DateTime(1973, 1, 1),
+                          maxTime: DateTime(2002, 12, 31), onChanged: (date) {
+                            print('change $date');
+                          }, onConfirm: (date) {
+                            print('confirm $date');
+                          }, currentTime: DateTime.now(), locale: LocaleType.en);
+                    },
+                    icon: Icon(Icons.mode_edit, size: 17, color: Colors.blue,),
                   ),
 
                 ],
@@ -150,8 +168,9 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         SizedBox(height: 20.0),
 
-        RaisedButton(
-          child: Text("Change Password"),
+        RaisedButton.icon(
+          icon: Icon(Icons.lock, size: 20, ),
+          label: Text("Change Password",),
           onPressed: (){
             _changePassword(context);
           },
@@ -248,7 +267,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             .db
                             .collection('userData')
                             .document(uid)
-                            .setData(user.toJson());
+                            .setData(user.toJson(), merge:true);
                         Navigator.of(context).pop();
                       },
                     )
@@ -327,7 +346,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             .db
                             .collection('userData')
                             .document(uid)
-                            .setData(user.toJson());
+                            .setData(user.toJson(), merge:true);
                         Navigator.of(context).pop();
                       },
                     )
@@ -406,7 +425,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             .db
                             .collection('userData')
                             .document(uid)
-                            .setData(user.toJson());
+                            .setData(user.toJson(), merge:true);
                         Navigator.of(context).pop();
                       },
                     )
@@ -485,7 +504,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             .db
                             .collection('userData')
                             .document(uid)
-                            .setData(user.toJson());
+                            .setData(user.toJson(), merge:true);
                         Navigator.of(context).pop();
                       },
                     )

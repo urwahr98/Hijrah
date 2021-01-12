@@ -39,6 +39,8 @@ class Auth {
         .setData({
       "email": email,
       "admin": false,
+      "icFront": false,
+      "icBack": false,
         });
     return user.uid;
   }
