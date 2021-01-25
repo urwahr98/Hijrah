@@ -36,7 +36,7 @@ class _PaymentPageState extends State<PaymentPage> {
           ),
 
           Text("Your Payment for ", style: TextStyle(fontSize: 40.0)),
-          Text("December 2020:", style: TextStyle(fontSize: 30.0)),
+          Text("January 2021:", style: TextStyle(fontSize: 30.0)),
 
           SizedBox(height: 20.0,),
 
@@ -47,7 +47,7 @@ class _PaymentPageState extends State<PaymentPage> {
           (imageURL == null)
               ? Padding(
               padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: Text('You have not pay for December 2020 yet!',
+              child: Text('You have not pay for January 2021 yet!',
                   style: TextStyle(fontSize: 22, color: Colors.redAccent), textAlign: TextAlign.center,))
               : Text('Waiting approval for payment.', style: TextStyle(fontSize: 20.0, color: Colors.lightBlue,), textAlign: TextAlign.center,),
 

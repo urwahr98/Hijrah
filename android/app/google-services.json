@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "574545024100",
-    "firebase_url": "https://hijrah-3d56f.firebaseio.com",
-    "project_id": "hijrah-3d56f",
-    "storage_bucket": "hijrah-3d56f.appspot.com"
+    "project_number": "635777125910",
+    "firebase_url": "https://hijrah-fyp.firebaseio.com",
+    "project_id": "hijrah-fyp",
+    "storage_bucket": "hijrah-fyp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:574545024100:android:565cda51e52e3dad087b71",
+        "mobilesdk_app_id": "1:635777125910:android:43ec16b967c7767f042f37",
         "android_client_info": {
           "package_name": "com.example.hijrah"
         }
       },
       "oauth_client": [
         {
-          "client_id": "574545024100-mtdf0bg5duc3jjde3kpcf65sqh7f72f1.apps.googleusercontent.com",
+          "client_id": "635777125910-8168gide30bt176t8dne7oruc451p0pr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDo8lBEbcBc92JMvG98FdVQw1mtUQxNg48"
+          "current_key": "AIzaSyB4VhufxrmTrl9BRRhyvalcKknV3AxznHk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "574545024100-mtdf0bg5duc3jjde3kpcf65sqh7f72f1.apps.googleusercontent.com",
+              "client_id": "635777125910-8168gide30bt176t8dne7oruc451p0pr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -25,28 +25,14 @@ class _LoanPageState extends State<LoanPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Loan Request'),),
-      body: Builder(
-        builder: (context) => SingleChildScrollView(
-        child: FutureBuilder(
-          future: Provider
-              .of(context)
-              .auth
-              .getCurrentUID(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return displayInfo(context, snapshot);
-            } else {
-              return CircularProgressIndicator();
-            }
-          },
-        ),
-      ),
+      body: SingleChildScrollView(
+        child: displayInfo(context),
       ),
     );
     throw UnimplementedError();
   }
 
-  Widget displayInfo(context, snapshot){
+  Widget displayInfo(context){
     var now = new DateTime.now();
     var formatter = new DateFormat('dd-MM-yyyy');
     String formattedDate = formatter.format(now);
@@ -79,7 +65,7 @@ class _LoanPageState extends State<LoanPage>{
           value: sliderValue,
           onChanged: (newValue){
           setState(() {
-            sliderValue = newValue;
+            sliderValue = newValue.roundToDouble();
             if (sliderValue < 6000) {
               scheme = "Skim 1";
             }else if(sliderValue > 6000 && sliderValue < 15000){
@@ -160,7 +146,7 @@ class _LoanPageState extends State<LoanPage>{
                 ),
                 SizedBox(width: 20,),
               (!icfront)?
-              Icon(Icons.clear) : Icon(Icons.check)
+              Icon(Icons.clear, color: Colors.red) : Icon(Icons.check, color: Colors.green)
               ]
         ),
 
@@ -189,7 +175,7 @@ class _LoanPageState extends State<LoanPage>{
               ),
               SizedBox(width: 20,),
               (!icback)?
-                Icon(Icons.clear) : Icon(Icons.check)
+              Icon(Icons.clear, color: Colors.red) : Icon(Icons.check, color: Colors.green)
             ]
         ),
 
@@ -242,6 +228,9 @@ class _LoanPageState extends State<LoanPage>{
 
 
         dialog(context);
+        setState(() {
+
+        });
 
       }else {
         print('No path received');

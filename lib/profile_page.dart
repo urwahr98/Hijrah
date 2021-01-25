@@ -5,6 +5,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 // import 'auth.dart';
 import 'models/User.dart';
 import 'package:hijrah/widgets/provider_widget.dart';
+import 'package:intl/intl.dart';
 
 
 
@@ -15,12 +16,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  User user = User("", "", "", null, null);
+  User user = User("", "", "", "", "");
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _userAddressController = TextEditingController();
   TextEditingController _userICnumController = TextEditingController();
   TextEditingController _userPhoneNumController = TextEditingController();
   TextEditingController _userPasswordController = TextEditingController();
+  TextEditingController _userBirthday = TextEditingController();
 
 
   @override
@@ -63,6 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
               _userAddressController.text = user.address;
               _userPhoneNumController.text = user.phoneNum;
               _userICnumController.text = user.ICnum;
+              _userBirthday.text = user.birthday;
             }
             return Container(
               alignment: Alignment(0.0, 0.0),
@@ -141,7 +144,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Birthday: 19/10/1998",
+                      "Birthday: ${_userBirthday.text}",
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
@@ -154,8 +157,23 @@ class _ProfilePageState extends State<ProfilePage> {
                           minTime: DateTime(1973, 1, 1),
                           maxTime: DateTime(2002, 12, 31), onChanged: (date) {
                             print('change $date');
-                          }, onConfirm: (date) {
-                            print('confirm $date');
+                          }, onConfirm: (date) async {
+                        String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+                        user.birthday = formattedDate;
+                        setState(() {
+                          _userBirthday.text = user.birthday;
+                        });
+                        final uid =
+                        await Provider
+                            .of(context)
+                            .auth
+                            .getCurrentUID();
+                        await Provider
+                            .of(context)
+                            .db
+                            .collection('userData')
+                            .document(uid)
+                            .setData(user.toJson(), merge:true);
                           }, currentTime: DateTime.now(), locale: LocaleType.en);
                     },
                     icon: Icon(Icons.mode_edit, size: 17, color: Colors.blue,),

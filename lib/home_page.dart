@@ -6,6 +6,7 @@ import 'package:hijrah/payment_page.dart';
 import 'auth.dart';
 import 'profile_page.dart';
 import 'package:hijrah/widgets/provider_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'models/User.dart';
 
 class HomePage extends StatelessWidget {
@@ -46,8 +47,20 @@ class HomePage extends StatelessWidget {
 
   List<Widget> buildButton(context) {
     return [
+
       Padding(padding: const EdgeInsets.all(8.0),),
-      Image(image: AssetImage('images/logo.png'), height: 200,),
+
+      // Image(image: AssetImage('images/logo.png'), height: 200,),
+
+      GestureDetector(
+        onLongPress: (){_launchURL();},
+        child: Image.asset(
+          'images/logo.png',
+          fit: BoxFit.cover,
+          height: 200,
+        ),
+      ),
+
       SizedBox( height: 50.0,),
 
       ButtonTheme(
@@ -149,6 +162,16 @@ class HomePage extends StatelessWidget {
         ),
       ),
 
+      SizedBox( height: 30.0,),
+
     ];
+  }
+  _launchURL() async {
+    const url = 'https://www.hijrahselangor.com';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
