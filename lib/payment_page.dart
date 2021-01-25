@@ -21,6 +21,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
   String text;
   String imageURL;
+  String url;
 
   _PaymentPageState(this.text);
 
@@ -31,60 +32,80 @@ class _PaymentPageState extends State<PaymentPage> {
       body: SingleChildScrollView(
         child:Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-          ),
+          FutureBuilder(
+            future: _getProfileData(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                url = snapshot.data['url'];
+              }
+              return Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                    ),
 
-          Text("Your Payment for ", style: TextStyle(fontSize: 40.0)),
-          Text("January 2021:", style: TextStyle(fontSize: 30.0)),
+                    Text("Your Payment for ", style: TextStyle(fontSize: 40.0)),
+                    Text("January 2021:", style: TextStyle(fontSize: 30.0)),
 
-          SizedBox(height: 20.0,),
+                    SizedBox(height: 20.0,),
 
-          Text("RM 300/month", style: TextStyle(fontSize: 30.0, color: Colors.red)),
+                    Text("RM 300/month",
+                        style: TextStyle(fontSize: 30.0, color: Colors.red)),
 
-          SizedBox(height: 10.0,),
+                    SizedBox(height: 10.0,),
 
-          (imageURL == null)
-              ? Padding(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: Text('You have not pay for January 2021 yet!',
-                  style: TextStyle(fontSize: 22, color: Colors.redAccent), textAlign: TextAlign.center,))
-              : Text('Waiting approval for payment.', style: TextStyle(fontSize: 20.0, color: Colors.lightBlue,), textAlign: TextAlign.center,),
+                    (url == null)
+                        ? Padding(
+                        padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                        child: Text('You have not pay for January 2021 yet!',
+                          style: TextStyle(fontSize: 22, color: Colors
+                              .redAccent), textAlign: TextAlign.center,))
+                        : Text('Waiting approval for payment.',
+                      style: TextStyle(
+                        fontSize: 20.0, color: Colors.lightBlue,),
+                      textAlign: TextAlign.center,),
 
-          SizedBox(height: 20.0,),
+                    SizedBox(height: 20.0,),
 
-          (imageURL != null)
-              ? Image.network(imageURL)
-                : Container(
-            margin: EdgeInsets.all(20),
-            padding: EdgeInsets.all(40),
-            decoration: BoxDecoration(
-                border: Border.all(width: 2,)),
-            child: Icon(
-              Icons.photo_camera,
-              color: Colors.black45,
-              size: 200,
+                    (url != null)
+                        ? Image.network(url)
+                        : Container(
+                      margin: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(40),
+                      decoration: BoxDecoration(
+                          border: Border.all(width: 2,)),
+                      child: Icon(
+                        Icons.photo_camera,
+                        color: Colors.black45,
+                        size: 200,
+                      ),
+                    ),
+
+                    SizedBox(height: 50.0,),
+
+                    RaisedButton.icon(
+                      padding: EdgeInsets.all(20.0),
+                      icon: Icon(Icons.insert_photo),
+                      label: Text(
+                          'Upload Image', style: TextStyle(fontSize: 20.0)),
+                      onPressed: () => uploadImage(),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                    ),
+
+                  ]
+              );
+            }
             ),
-          ),
+              ]
+              )
+              )
+                );
+              throw UnimplementedError();
+            }
 
-          SizedBox(height: 50.0,),
 
-          RaisedButton.icon(
-            padding: EdgeInsets.all(20.0),
-            icon: Icon(Icons.insert_photo),
-            label: Text('Upload Image', style: TextStyle(fontSize: 20.0)),
-            onPressed: () => uploadImage(),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-          ),
-
-        ],
-      ),
-      ),
-    );
-    throw UnimplementedError();
-  }
 
   uploadImage() async {
     final _storage = FirebaseStorage.instance;
@@ -110,9 +131,15 @@ class _PaymentPageState extends State<PaymentPage> {
         var snapshot = await _storage.ref().child(photoname).putFile(file).onComplete;
 
         var downloadUrl = await snapshot.ref.getDownloadURL();
+        await Provider
+            .of(context)
+            .db
+            .collection('userData')
+            .document(text)
+            .setData({"url": downloadUrl}, merge:true);
 
         setState(() {
-          imageURL = downloadUrl;
+          url = downloadUrl;
         }
         );
 
@@ -138,6 +165,17 @@ class _PaymentPageState extends State<PaymentPage> {
       return alertDialog;
     }
     );
+  }
+
+  _getProfileData() async {
+    var data = await Provider
+        .of(context)
+        .db
+        .collection('userData')
+        .document(text)
+        .get();
+    return data;
+
   }
 
 
