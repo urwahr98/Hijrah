@@ -1,16 +1,9 @@
 # hijrah
 
-A new Flutter application.
+Hijrah is a mobile application created using Flutter. I used Android studio to develop this application so I would recommend using it also if you want to run or edit the code.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+1. To run the code, simply use Android Studio and use the in built emulator or you could connect your android phone to computer and Android Studio would detect your phone and use that instead. 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2. To create a new Database, create an account on Firebase, then create a new application, follow the procedure that Firebase give and you will receive a file name "google-services.json". Replace the old file that with the file you have recieved at the source directory in hijrah/android/app. Then use flutter clean in the Android Studio terminal to delete any cache and recompile the code from start.
